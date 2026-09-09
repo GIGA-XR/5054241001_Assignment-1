@@ -72,7 +72,7 @@ The hardware document notes a stereo head camera "provides more immersion", and 
 
 ## 5. What I take from this
 
-[Two or three sentences. What does this teardown tell you about where XR design is heading — or where it is stuck? Do not summarise the sections above.]
+This system is not built so a human can be somewhere else but it is built so a human can be a labelled training example.
 
 ---
 
@@ -92,8 +92,8 @@ The hardware document notes a stereo head camera "provides more immersion", and 
 
 ## AI-assistance disclosure
 
-**What I used, and for what.** [Name the tools and the tasks — e.g. "Claude to tighten the prose in §2; all sources located and read by me." If you used none, write "None."]
+The title were chosen by me because I like humanoid robots a lot and I see the future of it. I used Claude to search for the references but did not use it to write the whole documentation. I used Claude to help me make the documentation easier to understand.
 
 ### What I disagreed with my AI assistant about
 
-[One paragraph, and it is marked. Where did the tool tell you something you decided was wrong, shallow, or unsupported — and what did you do instead? Be specific: name the claim, name your reason. If you used no tools, write instead about a source you decided not to trust, and why.]
+I need to double check the AI generation for helping me with this documentation because sometimes the AI halucinated and did a crucial mistake.
