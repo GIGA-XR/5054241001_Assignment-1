@@ -78,14 +78,15 @@ The hardware document notes a stereo head camera "provides more immersion", and 
 
 ## References
 
-1. [Primary source — developer documentation, specification, technical paper, or your own measurement. At least one of these is required.]
-2. [Author/Publisher. (Year). *Title*. URL — accessed DD Mon 2026]
-3. [ ]
-4. [ ]
+1. Unitree Robotics. (2026). *xr_teleoperate — An Open-Source Teleoperation Framework and Data Collection Toolkit for Embodied Intelligence*. Source code and documentation at commit `817fb00`. https://github.com/unitreerobotics/xr_teleoperate, accessed 8 Sep 2026.
+2. Meta Platforms. *WebXR Hand Tracking*. Meta Horizon developer documentation. https://developers.meta.com/horizon/documentation/web/webxr-hands/, accessed 8 Sep 2026.
+3. Unitree Robotics. *unitree_IL_lerobot, LeRobot training validation and Unitree data conversion*. https://github.com/unitreerobotics/unitree_IL_lerobot, accessed 8 Sep 2026.
+4. Qin, Y., Yang, W., Huang, B., Van Wyk, K., Su, H., Wang, X., Chao, Y.-W., & Fox, D. (2023). *AnyTeleop: A General Vision-Based Dexterous Robot Arm-Hand Teleoperation System*. Robotics: Science and Systems., origin of the `dex-retargeting` optimisers. https://yzqin.github.io/anyteleop/, accessed 8 Sep 2026.
+5. Cheng, X., Li, J., Yang, S., Yang, G., & Wang, X. (2024). *Open-TeleVision: Teleoperation with Immersive Active Visual Feedback*. arXiv:2407.01512. https://arxiv.org/abs/2407.01512, accessed 8 Sep 2026. The upstream project `xr_teleoperate` acknowledges first.
 
 ## Figure credits
 
-- Fig. 1 — [my own screenshot, Quest 3, 8 Sep 2026 / source and licence]
+- Fig. 1 — [ ]
 - Fig. 2 — [ ]
 - Fig. 3 — [ ]
 
