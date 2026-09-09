@@ -17,15 +17,23 @@
 
 ## 1. Device class
 
-[Which hardware class does it target? Name it precisely — degrees of freedom, standalone or tethered, opaque or passthrough, colour or monochrome, controllers shipped or not.]
+It targets 6-DoF standalone inside-out headsets with hand tracking and a WebXR browser (Quest 3 and 3S, PICO 4 Ultra Enterprise, Apple Vision Pro). The headset runs no robotics code at all. Connection is made by opening a URL in the headset browser and the entire control stack lives on a separate x86-64 Linux host plus the robot's onboard PC2. The headset contributes exactly three things:
 
-[Where does it sit on the reality–virtuality continuum, and why there rather than one step either side?]
+1. Head and hand pose
+2. A stereo display surface 
+3. Wi-Fi
 
-[What does that class make possible, and what does it rule out? If it depends on a capability our lab hardware lacks — eye tracking, depth-aware colour passthrough below Quest 3 / Pico 4 Ultra — say so and say what breaks without it.]
+![Caption](assets/fig1.png)
 
-![Caption that makes a point, not "screenshot of the app"](assets/fig1.png)
+![Caption](assets/fig3.jpeg)
 
-> **One of your three figures must be your own** — a photo or capture of your own hands-on session on a lab headset, or your own measurement, with a visible date. Mark it clearly in the figure credits below.
+There are three display modes: `immersive`, `ego`, and `pass-through`. They differ in how much of the operator's view is taken up by the robot's camera feed versus their own real room.
+
+- **`immersive`**: The operator sees only the robot's stereo camera feed, filling their whole view. It looks just like VR. The cost is that the operator cannot see their own surroundings at all.
+- **`ego`**: The operator sees their real room with the robot's camera feed shown only as a small window instead of filling their view.
+- **`pass-through`**: The operator sees only their real room and the robot's camera feed is not shown.
+
+The hardware document notes a stereo head camera "provides more immersion", and depth judgement for grasping depends on it. Because gaze is unavailable, v1.6 changed the default to a "head-yaw-relative arm reference" the operator's head yaw substitutes for where they are looking. This works, but the operator must turn their head to reorient the arm frame, and cannot glance. On Apple Vision Pro where eye tracking exists, the framework still does not use it because the WebXR path is the easiest path across all three vendors.
 
 ## 2. Input modality
 
