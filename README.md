@@ -37,30 +37,31 @@ The hardware document notes a stereo head camera "provides more immersion", and 
 
 ## 2. Input modality
 
-**What the user does:** [The modalities actually used — controllers, hand tracking, gaze-and-pinch, voice, gesture, dwell, physical props, room-scale locomotion.]
+Hand tracking is the default (`--input-mode=hand`); controller tracking is the alternative (`--input-mode=controller`). Head yaw sets the arm reference frame. Finger joints are mapped onto the robot's end-effector for the Dex3-1 hand, a thumb with 3 active DoF and index and middle fingers with 2 each. With `--motion`, locomotion is delegated to a separate device: an R3 remote in hand mode, or the controller joysticks. Session states (begin, record, stop, quit) is driven by pressing **r**, **s**, and **q** on the host computer's keyboard.
 
-**Why this and not that:** [Argue the choice against a named alternative the product did not take. What did it buy, and what did it give up?]
+For a system whose purpose is recording dexterous manipulation demonstrations, controllers would cap the achievable dataset at pinch-and-release. The designers trusted hand tracking with the robot's fingers but not with stopping the robot. That is an accurate assessment of hand tracking, and it produces the failure below.
 
-**Where it fails:** [At least one concrete failure mode — precision, arm fatigue, discoverability, occlusion, lighting, standing vs seated, small rooms, accessibility.]
+Three concrete modes, in order of how much they would cost:
+1. The operator is blind to their own control panel because the recording is started and stopped with **s** on a terminal the operator cannot see while wearing a headset in `immersive` mode.
+2. Under joint limits the solver will deliver the wrist position the operator asked for and quietly rotate the wrist to whatever is convenient. Nothing reports this. The operator sees the hand arrive and does not see that it arrived at the wrong angle until the grasp fails.
+3. Latency is added for filtering the noise from the sensor.
 
-**What I would change:** [One substantiated remedy. Say why it would work, not just that it would be nicer.]
+I still don't what to change for this particular program cause I'm not so sure what changes I need to make.
 
 ![Caption](assets/fig2.png)
 
 ## 3. Use of AI
 
-[Go through the pipeline and report only what you can evidence. Delete the rows you find nothing for — an honest short table beats a padded one.]
+I searched the repository and its three runtime submodules for text-to-3D, upscaling, and texture synthesis and found nothing, which is consistent with a system whose visual content is a live camera.
 
-| Where                | What it does                                                    | On-device or cloud | Cost it carries                                   | Source + the line I am relying on |
-| -------------------- | --------------------------------------------------------------- | ------------------ | ------------------------------------------------- | --------------------------------- |
-| Perception           | [hand/body pose, scene mesh, relocalisation]                    |                    | [latency / battery / thermal / network / privacy] | [link] — "[quote the sentence]"   |
-| Content              | [text- or image-to-3D, upscaling, texture synthesis]            |                    |                                                   | [link] — "[quote]"                |
-| Interaction          | [STT, TTS, LLM agent, translation]                              |                    |                                                   | [link] — "[quote]"                |
-| Rendering & delivery | [foveation, frame interpolation, super-resolution, split/cloud] |                    |                                                   | [link] — "[quote]"                |
+| Where                     | What it does                                                                                                              | On-device or cloud                          | Cost it carries                                                                       | Source + the line I am relying on                                                                                                                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Perception                | Head, wrist and hand skeleton tracking, performed by the headset's own runtime and read over WebXR                          | On-device, inside the headset (vendor)      | Vendor-locked accuracy; occlusion and lighting failures the framework cannot fix; biometric hand geometry leaves the headset every frame | Meta WebXR docs [2] — "The API exposes the poses of the 25 skeleton joints (shown in the figure below) in each of the user's hands"; repo codebase overview [1] — `television.py` "Captures head, wrist, and hand/controller data from XR devices using Vuer" |
+| Rendering & delivery      | H.264 stereo video from the robot's head camera to the headset over WebRTC. No learned foveation, super-resolution or frame interpolation found | On-device (robot PC2 encoder) → local Wi-Fi | Bandwidth and encode latency in the operator's control loop; requires Wi-Fi 6 router   | Repo README [1] — "Configure SSL certificates for the televuer module so that XR devices (e.g., Pico / Quest / Apple Vision Pro) can securely connect via HTTPS / WebRTC"                                  |
+| Interaction               | **No** speech, LLM or translation ships. A hook is provided for one: the IPC mode is documented as being for agent control  | n/a (not shipped)                           | n/a — but it marks the intended direction                                              | Repo README [1], `--ipc` parameter — "Allows controlling the xr_teleoperate program's state via IPC. **Suitable for interaction with agent programs.**"                                                    |
+| Downstream learning (the actual payload) | Recorded episodes are converted to LeRobot format and used to train ACT, Diffusion Policy, and Pi0 vision-language-action policies | Cloud / offline GPU training, after the session | Operator time; disk; bystander imagery in published datasets                            | Repo codebase overview [1] — `episode_writer.py` "Used to record data for imitation learning"; `unitree_IL_lerobot` [3] — "`Train Pi0 Policy`" with `--policy.type=pi0` and `--dataset.repo_id=unitreerobotics/G1_Dex3_ToastedBread_Dataset` |
 
-> Every row needs the **quoted sentence**, not just the link. A claim with a bare URL behind it is an unsupported claim.
-
-[Then the paragraph that actually earns the marks: what is the AI *for* here — is it load-bearing, or is it decoration? If you concluded there is no meaningful AI, this is where you show where you looked and why absence is plausible.]
+There is no AI in this system cause this system is used for dataset collecting.
 
 ## 4. Impact
 
