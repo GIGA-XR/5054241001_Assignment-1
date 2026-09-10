@@ -64,11 +64,11 @@ The hardware document notes a stereo head camera "provides more immersion", and 
 
 ## 4. Impact
 
-**Intended benefit:** [Concrete enough that someone could check whether it is true.]
+Lower the cost of collecting real robot manipulation demonstrations on a humanoid, so that imitation-learning policies can be trained on hardware most labs cannot afford to instrument.
 
-**Privacy, security, or ethics:** [Tie this to sensor data the device really captures — hand and body pose, room scans and scene meshes, passthrough camera frames, voice. What is collected, where does it go, and who is exposed — including bystanders who never consented.]
+The robot's head camera records the whole room, the whole time a session runs, and everything it sees is saved as training data. Anyone who walks past ends up in a dataset that may later be published without being asked and without knowing a recording is happening. There is no setting that asks people nearby for consent. The headset tracks 25 points on each hand with two hands at the default 30 times per second, that's 1,500 hand-position readings every second, plus head position.
 
-**Accessibility / human factors:** [Who cannot use this, and why? Height, one-handed use, vision, motion sensitivity, cybersickness, language, cost.]
+By default, the system assumes the operator has two hands that can move all their fingers because it maps human finger joints straight onto the robot's finger joints. Someone with one hand, or limited finger movement, has to switch to `controller` mode instead.
 
 ## 5. What I take from this
 
@@ -86,9 +86,9 @@ This system is not built so a human can be somewhere else but it is built so a h
 
 ## Figure credits
 
-- Fig. 1 — [ ]
-- Fig. 2 — [ ]
-- Fig. 3 — [ ]
+- Fig. 1 — System and wiring diagram. © Unitree Robotics, reproduced from the `xr_teleoperate` repository documentation [1] for academic commentary.![Caption](assets/fig1.png)
+- Fig. 2 — System and wiring diagram. © Unitree Robotics, reproduced from the `xr_teleoperate` repository documentation [1] for academic commentary.![Caption](assets/fig2.jpg)
+- Fig. 3 — A photo of me trying the VR headset.![Caption](assets/fig3.jpeg)
 
 ## AI-assistance disclosure
 
